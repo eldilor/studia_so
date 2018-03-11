@@ -1,2 +1,2 @@
-# studia_so
-Informatyka PWr Systemy Operacyjne
+# Systemy Operacyjne
+Informatyka PWr, semestr II 2017/2018
