@@ -1,4 +1,4 @@
-import zadanie1.App;
+import zadanie2.App;
 
 public class Main {
 
