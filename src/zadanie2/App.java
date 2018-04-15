@@ -6,8 +6,8 @@ public class App {
     public static void run() {
         Disc disc = App.generateDisc(200, 20);
 //        int[] memory = {98,183,37,122,14,124,65,67};
-//        Disc disc = new Disc(memory, 200, 36);
-        disc.applySstf();
+//        Disc disc = new Disc(memory, 200, 53);
+        disc.applyScan();
         System.out.println(disc);
     }
 
