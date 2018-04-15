@@ -36,6 +36,10 @@ public class Disc {
         this.currentPosition = currentPosition;
     }
 
+    public void toggleDirection() {
+        this.isLeftDirection = !this.isLeftDirection;
+    }
+
     public void applyFcfs() {
         int movesSum = 0, i = 0, startingCurrentPosition = this.currentPosition;
         int[] memory = this.memory;
@@ -76,13 +80,7 @@ public class Disc {
         int[] memory = this.memory;
         ArrayList<Integer> leftMemoryList = new ArrayList<>(), rightMemoryList = new ArrayList<>();
 
-        for (i = 0; i < memory.length; i++) {
-            if (memory[i] > this.currentPosition) {
-                rightMemoryList.add(memory[i]);
-            } else if (memory[i] <= this.currentPosition) {
-                leftMemoryList.add(memory[i]);
-            }
-        }
+        this.splitMemoryInTwoPartsByCurrentPosition(memory, leftMemoryList, rightMemoryList);
 
         int[] leftMemory = new int[leftMemoryList.size() + 1], rightMemory = new int[rightMemoryList.size()];
 
@@ -101,6 +99,50 @@ public class Disc {
         leftMemory = quickSorter.sort(false);
         quickSorter.setNumbersArray(rightMemory);
         rightMemory = quickSorter.sort();
+
+        movesSum = elevateThroughMemory(leftMemory, rightMemory);
+
+        this.currentPosition = startingCurrentPosition;
+
+        System.out.println("SCAN: " + movesSum);
+    }
+
+    public void applyCScan() {
+        int movesSum = 0, startingCurrentPosition = this.currentPosition, i;
+        int[] memory = this.memory;
+        ArrayList<Integer> leftMemoryList = new ArrayList<>(), rightMemoryList = new ArrayList<>();
+
+        this.splitMemoryInTwoPartsByCurrentPosition(memory, leftMemoryList, rightMemoryList);
+
+        int[] leftMemory = new int[leftMemoryList.size() + 1], rightMemory = new int[rightMemoryList.size() + 1];
+
+        i = 0;
+        for (int leftMemoryListItem : leftMemoryList) {
+            leftMemory[i++] = leftMemoryListItem;
+        }
+        leftMemory[i] = 0;
+
+        i = 0;
+        for (int rightMemoryListItem : rightMemoryList) {
+            rightMemory[i++] = rightMemoryListItem;
+        }
+        rightMemory[i] = this.memoryCapacity;
+
+        QuickSorter quickSorter = new QuickSorter(leftMemory);
+        leftMemory = quickSorter.sort();
+        quickSorter.setNumbersArray(rightMemory);
+        rightMemory = quickSorter.sort();
+
+        movesSum = elevateThroughMemory(leftMemory, rightMemory);
+
+        this.currentPosition = startingCurrentPosition;
+
+        System.out.println("C-SCAN: " + movesSum);
+    }
+
+    private int elevateThroughMemory(int[] leftMemory, int[] rightMemory) {
+        int movesSum = 0;
+        int i;
 
         if (this.isLeftDirection) {
             for (i  = 0; i < leftMemory.length; i++) {
@@ -124,8 +166,17 @@ public class Disc {
             }
         }
 
-        this.currentPosition = startingCurrentPosition;
+        return movesSum;
+    }
 
-        System.out.println("SCAN: " + movesSum);
+    private void splitMemoryInTwoPartsByCurrentPosition(int[] memory, ArrayList<Integer> leftMemoryList, ArrayList<Integer> rightMemoryList) {
+        int i;
+        for (i = 0; i < memory.length; i++) {
+            if (memory[i] > this.currentPosition) {
+                rightMemoryList.add(memory[i]);
+            } else if (memory[i] <= this.currentPosition) {
+                leftMemoryList.add(memory[i]);
+            }
+        }
     }
 }
