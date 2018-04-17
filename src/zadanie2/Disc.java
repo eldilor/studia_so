@@ -42,7 +42,8 @@ public class Disc {
 
     public void applyFcfs() {
         int movesSum = 0, i = 0, startingCurrentPosition = this.currentPosition;
-        int[] memory = this.memory;
+        int[] memory = new int[this.memory.length];
+        System.arraycopy(this.memory, 0, memory,0, this.memory.length);
 
         while (i < memory.length) {
             movesSum += Math.abs(this.currentPosition - memory[i]);
@@ -56,7 +57,8 @@ public class Disc {
 
     public void applySstf() {
         int movesSum = 0, steps = 0, startingCurrentPosition = this.currentPosition;
-        int[] memory = this.memory;
+        int[] memory = new int[this.memory.length];
+        System.arraycopy(this.memory, 0, memory,0, this.memory.length);
 
         while (steps < memory.length) {
             int closestElementIndex = Helper.findClosestIntIndexInArrayExcept(startingCurrentPosition, memory, -1);
@@ -77,7 +79,8 @@ public class Disc {
 
     public void applyScan() {
         int movesSum = 0, startingCurrentPosition = this.currentPosition, i;
-        int[] memory = this.memory;
+        int[] memory = new int[this.memory.length];
+        System.arraycopy(this.memory, 0, memory,0, this.memory.length);
         ArrayList<Integer> leftMemoryList = new ArrayList<>(), rightMemoryList = new ArrayList<>();
 
         this.splitMemoryInTwoPartsByCurrentPosition(memory, leftMemoryList, rightMemoryList);
@@ -109,7 +112,8 @@ public class Disc {
 
     public void applyCScan() {
         int movesSum = 0, startingCurrentPosition = this.currentPosition, i;
-        int[] memory = this.memory;
+        int[] memory = new int[this.memory.length];
+        System.arraycopy(this.memory, 0, memory,0, this.memory.length);
         ArrayList<Integer> leftMemoryList = new ArrayList<>(), rightMemoryList = new ArrayList<>();
 
         this.splitMemoryInTwoPartsByCurrentPosition(memory, leftMemoryList, rightMemoryList);

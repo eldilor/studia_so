@@ -4,12 +4,14 @@ import java.util.Random;
 
 public class App {
     public static void run() {
-        Disc disc = App.generateDisc(200, 20);
+        Disc disc = App.generateDisc(200, 200);
 //        int[] memory = {98,183,37,122,14,124,65,67};
 //        Disc disc = new Disc(memory, 200, 53);
+        disc.applyFcfs();
+        disc.applySstf();
+        disc.applyScan();
         disc.toggleDirection();
         disc.applyCScan();
-        System.out.println(disc);
     }
 
     private static Disc generateDisc(int memoryCapacity, int memoryRequests) {
